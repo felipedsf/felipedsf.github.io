@@ -1,0 +1,292 @@
+/* ===================================
+   Responsive Design - Mobile & Tablet
+   =================================== */
+
+/* Tablet (768px - 1023px) */
+@media (max-width: 1023px) {
+    :root {
+        --spacing-lg: 3rem;
+        --spacing-xl: 4rem;
+    }
+
+    .section-title {
+        font-size: 2.5rem;
+    }
+
+    .about-content {
+        grid-template-columns: 1fr;
+        gap: var(--spacing-md);
+    }
+
+    .contact-content {
+        grid-template-columns: 1fr;
+    }
+
+    .timeline {
+        padding-left: var(--spacing-md);
+    }
+
+    .timeline-dot {
+        left: -2.125rem;
+    }
+}
+
+/* Mobile (max-width: 767px) */
+@media (max-width: 767px) {
+    :root {
+        --spacing-md: 1.5rem;
+        --spacing-lg: 2rem;
+        --spacing-xl: 3rem;
+    }
+
+    html {
+        font-size: 14px;
+    }
+
+    /* Navigation */
+    .nav-menu {
+        position: fixed;
+        top: 60px;
+        left: -100%;
+        width: 100%;
+        height: calc(100vh - 60px);
+        background-color: var(--color-bg);
+        flex-direction: column;
+        align-items: center;
+        justify-content: flex-start;
+        padding-top: var(--spacing-lg);
+        gap: var(--spacing-md);
+        transition: left var(--transition-normal);
+        border-top: 1px solid var(--color-border);
+    }
+
+    .nav-menu.active {
+        left: 0;
+    }
+
+    .nav-link {
+        font-size: 1.25rem;
+    }
+
+    .hamburger {
+        display: flex;
+    }
+
+    .hamburger.active span:nth-child(1) {
+        transform: rotate(45deg) translate(7px, 7px);
+    }
+
+    .hamburger.active span:nth-child(2) {
+        opacity: 0;
+    }
+
+    .hamburger.active span:nth-child(3) {
+        transform: rotate(-45deg) translate(7px, -7px);
+    }
+
+    /* Hero */
+    .hero {
+        min-height: auto;
+        padding: var(--spacing-lg) 0;
+    }
+
+    .hero-title {
+        font-size: 2.5rem;
+    }
+
+    .hero-subtitle {
+        font-size: 1.25rem;
+    }
+
+    .hero-description {
+        font-size: 1rem;
+    }
+
+    .hero-cta {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .btn {
+        width: 100%;
+        text-align: center;
+    }
+
+    .profile-image {
+        width: 150px;
+        height: 150px;
+    }
+
+    /* Section Titles */
+    .section-title {
+        font-size: 2rem;
+        margin-bottom: var(--spacing-md);
+    }
+
+    /* About */
+    .about-text p {
+        font-size: 1rem;
+    }
+
+    .about-skills h3 {
+        font-size: 1.5rem;
+    }
+
+    /* Work */
+    .work-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .work-image {
+        height: 200px;
+    }
+
+    /* Experience */
+    .timeline {
+        padding-left: var(--spacing-sm);
+    }
+
+    .timeline::before {
+        left: 0;
+    }
+
+    .timeline-dot {
+        left: -1.375rem;
+        width: 12px;
+        height: 12px;
+    }
+
+    .timeline-content {
+        padding: var(--spacing-sm);
+    }
+
+    .timeline-content h3 {
+        font-size: 1.25rem;
+    }
+
+    .timeline-content h4 {
+        font-size: 1rem;
+    }
+
+    .timeline-content:hover {
+        transform: none;
+    }
+
+    /* Contact */
+    .contact-description {
+        font-size: 1rem;
+    }
+
+    .contact-method {
+        font-size: 0.875rem;
+    }
+
+    .contact-method:hover {
+        transform: none;
+    }
+
+    /* Footer */
+    .footer .container {
+        flex-direction: column;
+        gap: var(--spacing-sm);
+        text-align: center;
+    }
+}
+
+/* Small Mobile (max-width: 480px) */
+@media (max-width: 480px) {
+    .container {
+        padding: 0 var(--spacing-sm);
+    }
+
+    .hero-title {
+        font-size: 2rem;
+    }
+
+    .section-title {
+        font-size: 1.75rem;
+    }
+
+    .work-info h3 {
+        font-size: 1.25rem;
+    }
+
+    .btn {
+        padding: 0.75rem 1.5rem;
+        font-size: 0.875rem;
+    }
+}
+
+/* ===================================
+   Print Styles
+   =================================== */
+@media print {
+
+    .navbar,
+    .hamburger,
+    .hero-cta,
+    .work-overlay,
+    .contact-form,
+    .footer {
+        display: none;
+    }
+
+    body {
+        background-color: white;
+        color: black;
+    }
+
+    .section-title,
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+        color: black;
+    }
+
+    a {
+        color: black;
+        text-decoration: underline;
+    }
+}
+
+/* ===================================
+   Accessibility Improvements
+   =================================== */
+@media (prefers-reduced-motion: reduce) {
+
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
+}
+
+/* Focus styles for keyboard navigation */
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+textarea:focus-visible {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 2px;
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+    :root {
+        --color-bg: #000000;
+        --color-text: #ffffff;
+        --color-accent: #6db3ff;
+    }
+
+    .work-card,
+    .timeline-content,
+    .contact-method {
+        border-width: 2px;
+    }
+}
