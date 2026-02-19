@@ -13,9 +13,8 @@
         font-size: 2rem;
     }
 
-    .about-content {
+    .skills-grid {
         grid-template-columns: 1fr;
-        gap: var(--spacing-md);
     }
 
     .contact-content {
@@ -130,17 +129,20 @@
         font-size: 0.95rem;
     }
 
-    .about-skills h3 {
-        font-size: 1.1rem;
-    }
 
-    /* Work */
-    .work-grid {
+
+    /* Skills */
+    .skills-grid {
         grid-template-columns: 1fr;
     }
 
-    .work-image {
-        height: 200px;
+    .skill-card-wide {
+        grid-column: auto;
+    }
+
+    .education-items {
+        flex-direction: column;
+        gap: var(--spacing-sm);
     }
 
     /* Experience */

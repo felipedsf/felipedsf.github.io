@@ -98,30 +98,7 @@ animateElements.forEach(el => {
   animateObserver.observe(el);
 });
 
-// ===================================
-// Skill Bar Animation
-// ===================================
-const skillBars = document.querySelectorAll('.skill-progress');
 
-const skillObserver = new IntersectionObserver((entries) => {
-  entries.forEach(entry => {
-    if (entry.isIntersecting) {
-      const width = entry.target.style.width;
-      entry.target.style.width = '0';
-      setTimeout(() => {
-        entry.target.style.width = width;
-      }, 150);
-      skillObserver.unobserve(entry.target);
-    }
-  });
-}, {
-  threshold: 0.5,
-  rootMargin: '0px 0px -80px 0px'
-});
-
-skillBars.forEach(bar => {
-  skillObserver.observe(bar);
-});
 
 // ===================================
 // Contact Form Handling
