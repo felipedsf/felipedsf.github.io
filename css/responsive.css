@@ -10,7 +10,7 @@
     }
 
     .section-title {
-        font-size: 2.5rem;
+        font-size: 2rem;
     }
 
     .about-content {
@@ -50,7 +50,9 @@
         left: -100%;
         width: 100%;
         height: calc(100vh - 60px);
-        background-color: var(--color-bg);
+        background-color: rgba(15, 23, 42, 0.98);
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
         flex-direction: column;
         align-items: center;
         justify-content: flex-start;
@@ -65,7 +67,7 @@
     }
 
     .nav-link {
-        font-size: 1.25rem;
+        font-size: 1rem;
     }
 
     .hamburger {
@@ -91,11 +93,11 @@
     }
 
     .hero-title {
-        font-size: 2.5rem;
+        font-size: 2.25rem;
     }
 
     .hero-subtitle {
-        font-size: 1.25rem;
+        font-size: 0.9rem;
     }
 
     .hero-description {
@@ -113,23 +115,23 @@
     }
 
     .profile-image {
-        width: 150px;
-        height: 150px;
+        width: 130px;
+        height: 130px;
     }
 
     /* Section Titles */
     .section-title {
-        font-size: 2rem;
+        font-size: 1.75rem;
         margin-bottom: var(--spacing-md);
     }
 
     /* About */
     .about-text p {
-        font-size: 1rem;
+        font-size: 0.95rem;
     }
 
     .about-skills h3 {
-        font-size: 1.5rem;
+        font-size: 1.1rem;
     }
 
     /* Work */
@@ -152,8 +154,8 @@
 
     .timeline-dot {
         left: -1.375rem;
-        width: 12px;
-        height: 12px;
+        width: 10px;
+        height: 10px;
     }
 
     .timeline-content {
@@ -161,11 +163,11 @@
     }
 
     .timeline-content h3 {
-        font-size: 1.25rem;
+        font-size: 1.15rem;
     }
 
     .timeline-content h4 {
-        font-size: 1rem;
+        font-size: 0.95rem;
     }
 
     .timeline-content:hover {
@@ -174,11 +176,11 @@
 
     /* Contact */
     .contact-description {
-        font-size: 1rem;
+        font-size: 0.95rem;
     }
 
     .contact-method {
-        font-size: 0.875rem;
+        font-size: 0.85rem;
     }
 
     .contact-method:hover {
@@ -191,6 +193,11 @@
         gap: var(--spacing-sm);
         text-align: center;
     }
+
+    /* Simplify animations on mobile */
+    .animate-on-scroll.is-visible {
+        animation-duration: 0.4s;
+    }
 }
 
 /* Small Mobile (max-width: 480px) */
@@ -200,20 +207,25 @@
     }
 
     .hero-title {
-        font-size: 2rem;
+        font-size: 1.85rem;
     }
 
     .section-title {
-        font-size: 1.75rem;
+        font-size: 1.5rem;
     }
 
     .work-info h3 {
-        font-size: 1.25rem;
+        font-size: 1.125rem;
     }
 
     .btn {
-        padding: 0.75rem 1.5rem;
-        font-size: 0.875rem;
+        padding: 0.7rem 1.25rem;
+        font-size: 0.8rem;
+    }
+
+    /* Hide dot-grid on very small screens for performance */
+    body::before {
+        display: none;
     }
 }
 
@@ -234,6 +246,10 @@
     body {
         background-color: white;
         color: black;
+    }
+
+    body::before {
+        display: none;
     }
 
     .section-title,
@@ -265,6 +281,10 @@
         transition-duration: 0.01ms !important;
         scroll-behavior: auto !important;
     }
+
+    .animate-on-scroll {
+        opacity: 1;
+    }
 }
 
 /* Focus styles for keyboard navigation */
@@ -281,12 +301,17 @@ textarea:focus-visible {
     :root {
         --color-bg: #000000;
         --color-text: #ffffff;
-        --color-accent: #6db3ff;
+        --color-accent: #60A5FA;
+    }
+
+    body::before {
+        display: none;
     }
 
     .work-card,
     .timeline-content,
     .contact-method {
         border-width: 2px;
+        backdrop-filter: none;
     }
 }

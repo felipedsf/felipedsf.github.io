@@ -23,18 +23,14 @@ navLinks.forEach(link => {
 });
 
 // Navbar scroll effect
-let lastScroll = 0;
 window.addEventListener('scroll', () => {
   const currentScroll = window.pageYOffset;
-  
-  // Add shadow on scroll
+
   if (currentScroll > 50) {
-    navbar.style.boxShadow = '0 2px 20px rgba(0, 0, 0, 0.5)';
+    navbar.classList.add('scrolled');
   } else {
-    navbar.style.boxShadow = 'none';
+    navbar.classList.remove('scrolled');
   }
-  
-  lastScroll = currentScroll;
 });
 
 // ===================================
@@ -44,11 +40,11 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
   anchor.addEventListener('click', function (e) {
     e.preventDefault();
     const target = document.querySelector(this.getAttribute('href'));
-    
+
     if (target) {
       const navbarHeight = navbar.offsetHeight;
       const targetPosition = target.offsetTop - navbarHeight;
-      
+
       window.scrollTo({
         top: targetPosition,
         behavior: 'smooth'
@@ -64,13 +60,13 @@ const sections = document.querySelectorAll('section[id]');
 
 function highlightNavigation() {
   const scrollY = window.pageYOffset;
-  
+
   sections.forEach(section => {
     const sectionHeight = section.offsetHeight;
     const sectionTop = section.offsetTop - 100;
     const sectionId = section.getAttribute('id');
     const navLink = document.querySelector(`.nav-link[href="#${sectionId}"]`);
-    
+
     if (scrollY > sectionTop && scrollY <= sectionTop + sectionHeight) {
       navLink?.classList.add('active');
     } else {
@@ -82,14 +78,30 @@ function highlightNavigation() {
 window.addEventListener('scroll', highlightNavigation);
 
 // ===================================
+// Scroll Animations (CSS-driven)
+// ===================================
+const animateElements = document.querySelectorAll('.animate-on-scroll');
+
+const animateObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('is-visible');
+      animateObserver.unobserve(entry.target);
+    }
+  });
+}, {
+  threshold: 0.15,
+  rootMargin: '0px 0px -60px 0px'
+});
+
+animateElements.forEach(el => {
+  animateObserver.observe(el);
+});
+
+// ===================================
 // Skill Bar Animation
 // ===================================
 const skillBars = document.querySelectorAll('.skill-progress');
-
-const observerOptions = {
-  threshold: 0.5,
-  rootMargin: '0px 0px -100px 0px'
-};
 
 const skillObserver = new IntersectionObserver((entries) => {
   entries.forEach(entry => {
@@ -98,40 +110,17 @@ const skillObserver = new IntersectionObserver((entries) => {
       entry.target.style.width = '0';
       setTimeout(() => {
         entry.target.style.width = width;
-      }, 100);
+      }, 150);
       skillObserver.unobserve(entry.target);
     }
   });
-}, observerOptions);
+}, {
+  threshold: 0.5,
+  rootMargin: '0px 0px -80px 0px'
+});
 
 skillBars.forEach(bar => {
   skillObserver.observe(bar);
-});
-
-// ===================================
-// Fade In Animation on Scroll
-// ===================================
-const fadeElements = document.querySelectorAll('.work-card, .timeline-item, .about-content');
-
-const fadeObserver = new IntersectionObserver((entries) => {
-  entries.forEach(entry => {
-    if (entry.isIntersecting) {
-      entry.target.style.opacity = '0';
-      entry.target.style.transform = 'translateY(20px)';
-      entry.target.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
-      
-      setTimeout(() => {
-        entry.target.style.opacity = '1';
-        entry.target.style.transform = 'translateY(0)';
-      }, 100);
-      
-      fadeObserver.unobserve(entry.target);
-    }
-  });
-}, observerOptions);
-
-fadeElements.forEach(element => {
-  fadeObserver.observe(element);
 });
 
 // ===================================
@@ -141,16 +130,10 @@ const contactForm = document.getElementById('contactForm');
 
 contactForm.addEventListener('submit', (e) => {
   e.preventDefault();
-  
-  // Get form data
+
   const formData = new FormData(contactForm);
   const name = formData.get('name');
-  const email = formData.get('email');
-  const message = formData.get('message');
-  
-  // Here you would typically send the data to a server
-  // For now, we'll just show a success message
-  
+
   // Create success message
   const successMessage = document.createElement('div');
   successMessage.style.cssText = `
@@ -158,76 +141,45 @@ contactForm.addEventListener('submit', (e) => {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    background-color: #5b9bd5;
-    color: white;
+    background: linear-gradient(135deg, #2563EB, #4F46E5);
+    color: #F8FAFC;
     padding: 2rem 3rem;
-    border-radius: 8px;
-    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+    border-radius: 16px;
+    box-shadow: 0 16px 48px rgba(0, 0, 0, 0.5);
     z-index: 10000;
     text-align: center;
-    font-size: 1.125rem;
-    font-weight: 600;
+    font-family: 'Space Mono', monospace;
+    font-size: 1rem;
+    font-weight: 700;
+    backdrop-filter: blur(16px);
+    border: 1px solid rgba(248, 250, 252, 0.1);
   `;
   successMessage.innerHTML = `
-    <p>✓ Mensagem enviada com sucesso!</p>
-    <p style="font-size: 0.875rem; font-weight: 400; margin-top: 0.5rem;">Obrigado pelo contato, ${name}!</p>
+    <p>✓ Message sent successfully!</p>
+    <p style="font-family: 'Outfit', sans-serif; font-size: 0.875rem; font-weight: 400; margin-top: 0.5rem; opacity: 0.8;">Thank you for reaching out, ${name}!</p>
   `;
-  
+
   document.body.appendChild(successMessage);
-  
+
   // Reset form
   contactForm.reset();
-  
+
   // Remove message after 3 seconds
   setTimeout(() => {
     successMessage.style.opacity = '0';
-    successMessage.style.transition = 'opacity 0.3s ease';
+    successMessage.style.transition = 'opacity 0.4s cubic-bezier(0.4, 0, 0.2, 1)';
     setTimeout(() => {
       document.body.removeChild(successMessage);
-    }, 300);
+    }, 400);
   }, 3000);
 });
 
 // ===================================
-// Typing Effect for Hero Subtitle (Optional Enhancement)
-// ===================================
-const heroSubtitle = document.querySelector('.hero-subtitle');
-const subtitleText = heroSubtitle.textContent;
-let charIndex = 0;
-
-function typeEffect() {
-  if (charIndex < subtitleText.length) {
-    heroSubtitle.textContent = subtitleText.substring(0, charIndex + 1);
-    charIndex++;
-    setTimeout(typeEffect, 100);
-  }
-}
-
-// Uncomment to enable typing effect
-// heroSubtitle.textContent = '';
-// setTimeout(typeEffect, 500);
-
-// ===================================
-// Lazy Loading Images
-// ===================================
-if ('loading' in HTMLImageElement.prototype) {
-  const images = document.querySelectorAll('img[loading="lazy"]');
-  images.forEach(img => {
-    img.src = img.dataset.src;
-  });
-} else {
-  // Fallback for browsers that don't support lazy loading
-  const script = document.createElement('script');
-  script.src = 'https://cdnjs.cloudflare.com/ajax/libs/lazysizes/5.3.2/lazysizes.min.js';
-  document.body.appendChild(script);
-}
-
-// ===================================
 // Console Easter Egg
 // ===================================
-console.log('%c👋 Olá, desenvolvedor curioso!', 'font-size: 20px; font-weight: bold; color: #5b9bd5;');
-console.log('%cSe você está lendo isso, talvez devêssemos conversar! 😊', 'font-size: 14px; color: #a0a0a0;');
-console.log('%cEntre em contato: felipe@example.com', 'font-size: 14px; color: #5b9bd5;');
+console.log('%c> Hello, curious developer!', 'font-size: 18px; font-weight: bold; color: #2563EB; font-family: "Space Mono", monospace;');
+console.log('%cIf you\'re reading this, we should probably talk! 😊', 'font-size: 13px; color: #94A3B8;');
+console.log('%c> contact: felipedsf@gmail.com', 'font-size: 13px; color: #14B8A6; font-family: "Space Mono", monospace;');
 
 // ===================================
 // Performance Monitoring (Development)
@@ -237,7 +189,7 @@ if (window.performance && window.performance.timing) {
     setTimeout(() => {
       const perfData = window.performance.timing;
       const pageLoadTime = perfData.loadEventEnd - perfData.navigationStart;
-      console.log(`⚡ Página carregada em ${pageLoadTime}ms`);
+      console.log(`%c⚡ Page loaded in ${pageLoadTime}ms`, 'font-size: 12px; color: #64748B;');
     }, 0);
   });
 }
